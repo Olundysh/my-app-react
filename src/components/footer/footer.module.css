@@ -1,0 +1,19 @@
+.footer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0 30px;
+    background-color: black;
+    align-items: center;
+  }
+  
+  .footer p {
+    color: #9da5ee;
+    text-align: end;
+  }
+  
+  .footerLogo {
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+   padding: 30px;
+  }
