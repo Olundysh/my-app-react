@@ -7,19 +7,19 @@ const overlay = [
     id: 1,
     title: "Udānavarga_(A)",
     shelfNumber: "20344",
-    img: "/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 2,
     title: "Udānavarga_(B)",
     shelfNumber: "20344",
-    img: "/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 3,
     title: "Udānavarga_(С)",
     shelfNumber: "20344",
-    img: "/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
 ];
 
