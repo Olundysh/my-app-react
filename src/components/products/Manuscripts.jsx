@@ -8,42 +8,42 @@ const manuscripts = [
     title: "Udānavarga_(A)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 2,
     title: "Udānavarga_(B)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 3,
     title: "Udānavarga_(C)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 4,
     title: "Udānavarga_(C)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 5,
     title: "Udānavarga_(C)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
   {
     id: 6,
     title: "Udānavarga_(C)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
-    img: "/public/img/TocharianMss.jpg",
+    img: "./img/TocharianMss.jpg",
   },
 ];
 
@@ -56,7 +56,7 @@ const Manuscripts = () => {
       <div className={style.search}>
         <h2>All manuscripts</h2>
         <div className={style.search_block}>
-          <img src="/public/img/search.png" alt="search" />
+          <img src="./img/search.png" alt="search" />
           <input placeholder="Поиск по рукописям"></input>
         </div>
       </div>
