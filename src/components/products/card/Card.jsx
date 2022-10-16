@@ -27,7 +27,7 @@ setAdded(!added)
       <p className={style.manuscript_shelfNumber}>
         <span>{props.shelfNumber} T III</span>
         <button className={added ? style.add_mss : style.add_mss1} onClick={onClickPlus}>
-          <img src={added ? "/img/check.png" : "/img/icons8-plus-24.png"} alt="any"></img>
+          <img src={added ? "./img/check.png" : "./img/icons8-plus-24.png"} alt="any"></img>
         </button>
       </p>
     </div>
