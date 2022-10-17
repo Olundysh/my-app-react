@@ -13,7 +13,7 @@ setAdded(!added)
 
   return (
     <div className={style.manuscript_item}>
-      <button className={style.favourite_btn} onClick={props.onClickSelected}>Добавить в избранное</button>
+      <button className={style.favourite_btn} onClick={props.onClickSelected}>Add to Favourities</button>
 
       <img
         className={style.manuscript_img}

@@ -57,7 +57,7 @@ const Manuscripts = () => {
         <h2>All manuscripts</h2>
         <div className={style.search_block}>
           <img src="./img/search.png" alt="search" />
-          <input placeholder="Поиск по рукописям"></input>
+          <input placeholder="Search by manuscripts"></input>
         </div>
       </div>
 
@@ -78,7 +78,7 @@ const Manuscripts = () => {
               //   setAdded(!added)
               // }}
               onClickSelected={() => {
-                alert("Вы поместили рукопись " + obj.title + " в избранное.");
+                alert("The manuscript " + obj.title + " is added to Favourities.");
               }}
             />
           );
