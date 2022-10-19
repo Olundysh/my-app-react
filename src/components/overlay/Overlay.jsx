@@ -2,26 +2,26 @@ import Selected from "./selected/Selected";
 import TotalTotal from "./total/TotalTotal";
 import style from "./overlay.module.css";
 
-const overlay = [
-  {
-    id: 1,
-    title: "Udānavarga_(A)",
-    shelfNumber: "20344",
-    img: "./img/TocharianMss.jpg",
-  },
-  {
-    id: 2,
-    title: "Udānavarga_(B)",
-    shelfNumber: "20344",
-    img: "./img/TocharianMss.jpg",
-  },
-  {
-    id: 3,
-    title: "Udānavarga_(С)",
-    shelfNumber: "20344",
-    img: "./img/TocharianMss.jpg",
-  },
-];
+// const overlay = [
+//   {
+//     id: 1,
+//     title: "Udānavarga_(A)",
+//     shelfNumber: "20344",
+//     img: "./img/TocharianMss.jpg",
+//   },
+//   {
+//     id: 2,
+//     title: "Udānavarga_(B)",
+//     shelfNumber: "20344",
+//     img: "./img/TocharianMss.jpg",
+//   },
+//   {
+//     id: 3,
+//     title: "Udānavarga_(С)",
+//     shelfNumber: "20344",
+//     img: "./img/TocharianMss.jpg",
+//   },
+// ];
 
 const Overlay = (props) => {
   return (
@@ -35,7 +35,7 @@ const Overlay = (props) => {
             </button>
           </div>
           <div className="manuscript_item">
-            {overlay.map((obj) => {
+            {props.cartItems.map((obj) => {
               return (
                 <Selected
                   // key={obj.id}
