@@ -5,7 +5,7 @@ import React from "react"
 const manuscripts = [
   {
     id: 1,
-    title: "Udānavarga_(A)",
+    title: "Udānavarga_(А)",
     description: "Brief description and content of the mss",
     shelfNumber: "20344",
     img: "./img/TocharianMss.jpg",
