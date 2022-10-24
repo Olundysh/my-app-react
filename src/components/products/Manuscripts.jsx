@@ -1,55 +1,26 @@
+import axios from "axios";
 import Card from "./card/Card";
 import style from "./manuscripts.module.css";
 import React from "react";
 
-// const manuscripts = [
-//   {
-//     id: 1,
-//     title: "Udānavarga_(А)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-//   {
-//     id: 2,
-//     title: "Udānavarga_(B)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-//   {
-//     id: 3,
-//     title: "Udānavarga_(C)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-//   {
-//     id: 4,
-//     title: "Udānavarga_(C)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-//   {
-//     id: 5,
-//     title: "Udānavarga_(C)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-//   {
-//     id: 6,
-//     title: "Udānavarga_(C)",
-//     description: "Brief description and content of the mss",
-//     shelfNumber: "20344",
-//     img: "./img/TocharianMss.jpg",
-//   },
-// ];
+// "Элемент Manuscripts принимает праметры-пропсы с более высокого элемента - App. ";
+// Тэгам мы придаем имена вот таким образом - className={style.manuscripts_section} - потому что импортируем их из отдельного css-файла (см. в верху страницы)
 
 const Manuscripts = (props) => {
-  const onAddToCart = (obj) => {
-    props.setCartItems([...props.cartItems, obj]);
+  const onAddToSelected = (addedManuscript) => { // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
+    axios.post(
+      "https://63500d14df22c2af7b61c10a.mockapi.io/cart",
+      addedManuscript
+    ); 
+    props.setOverlayManuscripts([...props.overlayManuscripts, addedManuscript]); //Добавляем в стейт новый объект
+  };
+
+  const onAddToFavourities = (addedFavouriteManuscript) => { 
+    axios.post(
+      "https://63500d14df22c2af7b61c10a.mockapi.io/favourities",
+      addedFavouriteManuscript
+    ); 
+    props.setFavouriteManuscripts([...props.favouriteManuscripts, addedFavouriteManuscript]); //Добавляем в стейт новый объект
   };
 
   const onSearchInput = (inputValue) => {
@@ -72,27 +43,31 @@ const Manuscripts = (props) => {
       </div>
 
       <div className={style.manuscripts}>
-        {props.items
-          .filter((item) => item.title.toLowerCase().includes(props.search.toLowerCase()))
-          .map((obj) => {
+        {props.manuscripts
+          .filter((manuscript) =>
+            manuscript.title.toLowerCase().includes(props.search.toLowerCase())
+          )
+          .map((manuscript) => {
             return (
               <Card
-                // key={obj.id}
-                // title={obj.title}
-                // description={obj.description}
-                // shelfNumber={obj.shelfNumber}
-                // img={obj.img}
-                {...obj} //Object spread operator
-                // onClickPlus={() => {
-                //   setAdded(!added)
+                key={manuscript.id}
+                title={manuscript.title}
+                description={manuscript.description}
+                shelfNumber={manuscript.shelfNumber}
+                img={manuscript.img}
+                // {...manuscript} //Object spread operator
+
+                // onClickAddedToFavorities={(favouriteManuscript) => {
+                //   console.log("dfdfd")
+                //   onAddToFavourities(favouriteManuscript)
                 // }}
-                onClickSelected={() => {
-                  alert(
-                    "The manuscript " + obj.title + " is added to Favourities."
-                  );
+
+                onFavourite={(favouriteManuscript) => {
+                  onAddToFavourities(favouriteManuscript);
                 }}
-                onPlus={(cartObj) => {
-                  onAddToCart(cartObj);
+
+                onPlus={(selectedManuscript) => {
+                  onAddToSelected(selectedManuscript);
                 }}
               />
             );

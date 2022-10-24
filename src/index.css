@@ -11,3 +11,7 @@ code {
   font-family: 'Cormorant SC', serif, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a {
+  text-decoration: none;
+}

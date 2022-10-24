@@ -11,12 +11,18 @@
   display: grid;
   grid-template-rows: 0.5fr 6fr 1fr;
   position: fixed;
+  overflow: scroll;
   width: 700px;
   right: 0;
   height: 100%;
   background-color: white;
   box-shadow: -10px 0 20px rgba(31, 29, 29, 0.678);
   padding: 0 50px 0 50px;
+}
+
+.emptySelected {
+  text-align: center;
+  font-size: 32px;
 }
 
 .title_block {
@@ -45,14 +51,4 @@
 
 .close_btn:hover {
   box-shadow: 0px 1px 1px 0 rgb(66, 63, 63);
-}
-.manuscript_item {
-  display: grid;
-  border: 1px solid #9f9f9f;
-  background-color: white;
-  box-shadow: 2px 2px 3px 2px rgb(104, 126, 108);
-  border-radius: 35px;
-  padding: 30px;
-  margin: 60px 0 60px 0px;
-  transition: box-shadow 0.2s ease-in;
 }

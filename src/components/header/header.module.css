@@ -11,18 +11,28 @@ header{
     column-gap: 30px;
     justify-items: end;
     align-items: center;
+    border-radius: 3px;
   }
+
   
-  .logo, .nav_item:hover{
-    color: rgb(247, 246, 239);
+  
+  .logo {
+    color: #e5fae4;
   }
   
   .nav_item{
     color: #5967e9;
+    background-color: #e5fae4;
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
-    text-decoration: none;
+    display: block;
+    border: 1px solid #9f9f9f;
+    border-radius: 12px;
+  }
+
+  .nav_item:hover{
+    color: rgb(52, 83, 52);
   }
 
   
