@@ -89,9 +89,26 @@
   text-align: start;
   width: fit-content;
   cursor: pointer;
-  transition: transform 0.5s ease-in;
+}
+
+.favourite_btn_added {
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(#d1d5f3, #6369a1);
+  color: #123311;
+  padding: 7px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: start;
+  width: fit-content;
+  cursor: pointer;
 }
 
 .favourite_btn:hover {
-  transform: translateX(20px);
+  color: #3d31aa;
+  background: linear-gradient(#d1d5f3, rgb(228, 243, 228));
+}
+
+.favourite_btn_added:hover {
+  background: linear-gradient(rgb(228, 243, 228), #d1d5f3);
 }

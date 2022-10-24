@@ -32,7 +32,7 @@
   }
   
   .banner_btn{
-    background-color: #717cdf;
+    background: linear-gradient(#8f96db, #6369a1);
     color: rgb(252, 251, 246);
     margin: 15px;
     padding: 20px 25px;

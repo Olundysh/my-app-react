@@ -30,19 +30,15 @@ const Card = (props) => {
   return (
     <div className={style.manuscript_item}>
       
-      {/* {favorite === true ? (
-        <button className={style.favorite_btn_added} onClick={onClickFavorite}>
-          Товар добавлен в избранное
+      {favourite === true ? (
+        <button className={style.favourite_btn_added} onClick={onClickFavouritePlus}>
+          Added to Favourities
         </button>
       ) : (
-        <button className={style.favorite_btn} onClick={onClickFavorite}>
-          Добавить в избранное
+        <button className={style.favourite_btn} onClick={onClickFavouritePlus}>
+          Add to Favourities
         </button>
-      )} */}
-
-      <button className={style.favourite_btn} onClick={onClickFavouritePlus}>
-        {favourite ? "ADDED TO FAVOURITIES" : "Add to Favourities"}
-      </button>
+      )}
 
       <img
         className={style.manuscript_img}
