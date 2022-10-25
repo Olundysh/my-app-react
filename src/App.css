@@ -5,7 +5,7 @@ textarea {
 }
 
 .app {
-  background-color: #e5fae4;
+  background: linear-gradient(90deg, #e5fae4, #eaf8e9);
   margin: 0;
 }
 

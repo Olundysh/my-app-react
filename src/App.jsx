@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
 import Banner from "./components/banner/Banner";
-import Manuscripts from "./components/products/Manuscripts";
+import Manuscripts from "./components/manuscripts/Manuscripts";
 import Footer from "./components/footer/Footer";
 import Overlay from "./components/overlay/Overlay";
 import TextSection from "./components/textSection/TextSection";

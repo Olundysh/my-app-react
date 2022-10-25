@@ -35,10 +35,13 @@ const Overlay = (props) => {
               })}
             </div>
           ) : (
-            <h2 className={style.emptySelected}> You have no selected manuscripts </h2>
+            <h2 className={style.emptySelected}>
+              {" "}
+              You have no selected manuscripts{" "}
+            </h2>
           )}
 
-          <TotalTotal />
+          <TotalTotal overlayManuscripts={props.overlayManuscripts} />
         </div>
       </div>
     </div>

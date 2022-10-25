@@ -17,12 +17,12 @@ header{
   
   
   .logo {
-    color: #e5fae4;
+    color: #f7faf6;
   }
   
   .nav_item{
-    color: #5967e9;
-    background-color: #e5fae4;
+    color: #4551bb;
+    background-color: #f7faf6;
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;

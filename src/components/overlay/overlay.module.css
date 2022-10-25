@@ -15,7 +15,7 @@
   width: 700px;
   right: 0;
   height: 100%;
-  background-color: white;
+  background: linear-gradient(90deg, #f4faf4, #eef7ed);
   box-shadow: -10px 0 20px rgba(31, 29, 29, 0.678);
   padding: 0 50px 0 50px;
 }
