@@ -1,0 +1,56 @@
+.manuscripts_section {
+  max-width: 1200px;
+  height: 1200px;
+  margin: 0 auto;
+}
+
+.manuscripts_section h2 {
+  display: block;
+  padding: 20px;
+  text-align: left;
+}
+
+.manuscripts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 100px;
+}
+
+.search {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+}
+
+.search_block {
+  justify-self: end;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 250px;
+}
+
+.search_block:hover {
+  border: 3px solid #3f7c3f;
+}
+
+.search h2 {
+  justify-self: start;
+  font-size: 32px;
+}
+
+.search_block img {
+  width: 13px;
+  margin-right: 10px;
+}
+
+.search_block input {
+  border: none;
+  font-size: 16px;
+}
+
+.search_block input:focus-visible {
+  outline: none;
+  border-bottom: 2px solid #9ccc9b;
+}
