@@ -1,9 +1,9 @@
-import style from "./card.module.css";
+import style from "./favouriteCard.module.css";
 import React from "react";
 
-const Card = (props) => {
+const FavouriteCard = (props) => {
   const [added, setAdded] = React.useState(false);
-  const [favourite, setFavourite] = React.useState(false);
+  const [favourite, setFavourite] = React.useState(true);
 
   const onClickPlus = () => {
     let id = props.id;
@@ -17,30 +17,30 @@ const Card = (props) => {
     setAdded(!added);
   };
 
-  const onClickFavouritePlus = () => {
-    let id = props.id;
-    let title = props.title;
-    let description = props.description;
-    let shelfNumber = props.shelfNumber;
-    let img = props.img;
+  const onClickRemoveFromFavourities = () => {
+    props.onRemoveFromFavourities(props.id);
 
-    props.onFavourite({id, title, description, shelfNumber, img });
-
-    setFavourite(!favourite);
+    // setFavourite(!favourite);
   };
 
   return (
     <div className={style.manuscript_item}>
-      
-      {favourite === true ? (
+      {/* {favourite === true ? (
         <button className={style.favourite_btn_added} onClick={onClickFavouritePlus}>
-          Remove from Favourities
+          Added to Favourities
         </button>
       ) : (
         <button className={style.favourite_btn} onClick={onClickFavouritePlus}>
           Add to Favourities
         </button>
-      )}
+      )} */}
+
+      <button
+        className={style.favourite_btn_added}
+        onClick={onClickRemoveFromFavourities}
+      >
+        Remove from Favourities
+      </button>
 
       <img
         className={style.manuscript_img}
@@ -66,4 +66,4 @@ const Card = (props) => {
     </div>
   );
 };
-export default Card;
+export default FavouriteCard;

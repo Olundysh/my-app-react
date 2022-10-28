@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
-import { Route, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/Header";
-import Banner from "./components/banner/Banner";
-import Manuscripts from "./components/manuscripts/Manuscripts";
 import Footer from "./components/footer/Footer";
 import Overlay from "./components/overlay/Overlay";
-import TextSection from "./components/textSection/TextSection";
+import Favourites from "./components/favourities/favourities";
+import Home from "./Home";
 
 function App() {
   const [overlayOpened, setOverlayOpened] = React.useState(false); //Устанавливаем состояние "overlayOpened" для открытия боковой панели - оно boolean, т.е. либо открыта, либо закрыта; по умолчанию панель закрыта; функция-property "openOverlay" будет прописана на этой же странице, в <Header/>, чтобы передать-прокинуть ее ниже - непосредственно в сам jsx-элемент Header.
@@ -36,7 +36,9 @@ function App() {
   //Удаление из Selected:
   const onRemoveCartItem = (id) => {
     axios.delete(`https://63500d14df22c2af7b61c10a.mockapi.io/cart/${id}`);
-    setOverlayManuscripts((prev) => prev.filter((item) => item.id !== id));
+    setOverlayManuscripts((prev) =>
+      prev.filter((item) => Number(item.id) !== Number(id))
+    );
   };
 
   return (
@@ -52,29 +54,37 @@ function App() {
       {/* Внутри jsx-элемента <Overlay/> прописываем функцию-property "closeOverlay": она состоит в том, чтобы установить состояние setOverlayOpened(false). После этого идем в элемент Overlay, где укажем - в каком моменте эта функция-property должна реализовываться */}
       {/* Внутри jsx-элемента <Overlay/> прописываем массив-property "overlaytItems": Из каких объектов он состоит, мы можем узнать только если спустимся ниже по элементам. После этого идем в элемент Overlay, где укажем - в каком моменте этот массив-property будет использоваться, и из каких элементов он будет состоять. */}
 
-
-<Routes>
-<Route path="/test/:favourities" element={<h1>testtesttest</h1>}
-/>
-
-</Routes>
-
-
-
       <Header openOverlay={() => setOverlayOpened(true)} />
+      <div>
+        <Routes>
+          <Route
+            path="/favourities"
+            element={
+              <Favourites
+                favouriteManuscripts={favouriteManuscripts}
+                setFavouriteManuscripts={setFavouriteManuscripts}
+                overlayManuscripts={overlayManuscripts}
+                setOverlayManuscripts={setOverlayManuscripts}
+              />
+            }
+          />
 
-      {/* Прописываем функцию-property "openOverlay": она состоит в том, чтобы установить состояние setOverlayOpened(true). После этого идем в элемент Header, где укажем - в каком моменте эта функция-property должна реализовываться */}
-      <Banner />
-      <TextSection />
-      <Manuscripts
-        manuscripts={manuscripts} //Прокидываем ниже в Manuscripts пропс manuscripts (массив). Это массив из состояния, следовательно, он будет изменяться. А меняется он, как это прописано выше в React.useEffect, джейсоновским файлом, полученным из mocapi. То есть с самого верха.
-        overlayManuscripts={overlayManuscripts}
-        favouriteManuscripts={favouriteManuscripts}
-        setFavouriteManuscripts ={setFavouriteManuscripts}
-        setOverlayManuscripts={setOverlayManuscripts} //Прокидываем ниже в Manuscripts пропсы overlayManuscripts (массив) и setOverlayManuscripts (функцию). Это массив из состояния, следовательно, он будет изменяться. Меняться он будет с помощью функции onAddToSelected, которую мы пропишем непосредственно в элементе Manuscripts. А onAddToSelected мы запишем составляющей пропса элемента <Card> - onPlus. А сам onPlus пропишем уже непосредственно в элементе <Card>.
-        setSearch={setSearch}
-        search={search} // Прокидываем ниже в Manuscripts пропсы search (строка) и setSearch (функцию). Это строка из состояния, следовательно, она будет изменяться. Меняться она будет с помощью функции setSearch, которую мы используем в функции элемента Manuscripts - onSearchInput. А onSearchInput мы реализуем в состоянии  onChange в интпуте элемента Manuscripts.
-      />
+          <Route
+            path="/"
+            element={
+              <Home
+                manuscripts={manuscripts}
+                overlayManuscripts={overlayManuscripts}
+                favouriteManuscripts={favouriteManuscripts}
+                setFavouriteManuscripts={setFavouriteManuscripts}
+                setOverlayManuscripts={setOverlayManuscripts}
+                setSearch={setSearch}
+                search={search}
+              />
+            }
+          />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

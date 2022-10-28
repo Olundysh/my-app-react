@@ -7,20 +7,53 @@ import React from "react";
 // Тэгам мы придаем имена вот таким образом - className={style.manuscripts_section} - потому что импортируем их из отдельного css-файла (см. в верху страницы)
 
 const Manuscripts = (props) => {
-  const onAddToSelected = (addedManuscript) => { // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
-    axios.post(
-      "https://63500d14df22c2af7b61c10a.mockapi.io/cart",
-      addedManuscript
-    ); 
-    props.setOverlayManuscripts([...props.overlayManuscripts, addedManuscript]); //Добавляем в стейт новый объект
+  const onAddToSelected =  (addedManuscript) => {
+    try {
+      if (
+        props.overlayManuscripts.find(
+          (item) => Number(item.id) === Number(addedManuscript.id)
+        )
+      ) {
+        axios.delete(`https://63500d14df22c2af7b61c10a.mockapi.io/cart/${addedManuscript.id}`)
+        props.setOverlayManuscripts((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(addedManuscript.id))
+        );
+      } else {
+        // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
+       axios.post(
+          "https://63500d14df22c2af7b61c10a.mockapi.io/cart",
+          addedManuscript
+        );
+        props.setOverlayManuscripts([
+          ...props.overlayManuscripts,
+          addedManuscript,
+        ]); //Добавляем в стейт новый объект
+      }
+    } catch {
+      alert("Failed to add the manuscript to Selected");
+    }
   };
 
-  const onAddToFavourities = (addedFavouriteManuscript) => { 
-    axios.post(
-      "https://63500d14df22c2af7b61c10a.mockapi.io/favourities",
-      addedFavouriteManuscript
-    ); 
-    props.setFavouriteManuscripts([...props.favouriteManuscripts, addedFavouriteManuscript]); //Добавляем в стейт новый объект
+  const onAddToFavourities = (addedFavouriteManuscript) => {
+    try {
+      if (
+        props.favouriteManuscripts.find(
+          (obj) => Number(obj.id) === Number(addedFavouriteManuscript.id)
+        )
+      ) {
+        axios.delete(
+          `https://63500d14df22c2af7b61c10a.mockapi.io/favourities/${addedFavouriteManuscript.id}`
+        );
+      } else {
+        axios.post(
+          "https://63500d14df22c2af7b61c10a.mockapi.io/favourities",
+          addedFavouriteManuscript
+        );
+        props.setFavouriteManuscripts([...props.favouriteManuscripts, addedFavouriteManuscript]);
+      }
+    } catch {
+      alert("Failed to add the manuscript to your favourites list");
+    }
   };
 
   const onSearchInput = (inputValue) => {
@@ -51,21 +84,14 @@ const Manuscripts = (props) => {
             return (
               <Card
                 key={manuscript.id}
+                id={manuscript.id}
                 title={manuscript.title}
                 description={manuscript.description}
                 shelfNumber={manuscript.shelfNumber}
                 img={manuscript.img}
-                // {...manuscript} //Object spread operator
-
-                // onClickAddedToFavorities={(favouriteManuscript) => {
-                //   console.log("dfdfd")
-                //   onAddToFavourities(favouriteManuscript)
-                // }}
-
                 onFavourite={(favouriteManuscript) => {
                   onAddToFavourities(favouriteManuscript);
                 }}
-
                 onPlus={(selectedManuscript) => {
                   onAddToSelected(selectedManuscript);
                 }}
