@@ -7,49 +7,48 @@ import React from "react";
 // Тэгам мы придаем имена вот таким образом - className={style.manuscripts_section} - потому что импортируем их из отдельного css-файла (см. в верху страницы)
 
 const Manuscripts = (props) => {
-  const onAddToSelected =  (addedManuscript) => {
+  const onAddToSelected = async (addedManuscript) => {
     try {
-      if (
-        props.overlayManuscripts.find(
-          (item) => Number(item.id) === Number(addedManuscript.id)
-        )
-      ) {
-        axios.delete(`https://63500d14df22c2af7b61c10a.mockapi.io/cart/${addedManuscript.id}`)
+      const findOverlayManuscripts = props.overlayManuscripts.find(
+        (overLayItem) => overLayItem.myId === addedManuscript.myId
+      );
+      if (findOverlayManuscripts) {
+        axios.delete(
+          `http://localhost:3001/cart/${findOverlayManuscripts.id}`
+        );
         props.setOverlayManuscripts((prev) =>
-          prev.filter((item) => Number(item.id) !== Number(addedManuscript.id))
+          prev.filter(
+            (overLayItem) => overLayItem.myId !== addedManuscript.myId
+          )
         );
       } else {
         // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
-       axios.post(
-          "https://63500d14df22c2af7b61c10a.mockapi.io/cart",
+        const { data } = await axios.post(
+          "http://localhost:3001/cart",
           addedManuscript
         );
-        props.setOverlayManuscripts([
-          ...props.overlayManuscripts,
-          addedManuscript,
-        ]); //Добавляем в стейт новый объект
+        props.setOverlayManuscripts([...props.overlayManuscripts, data]); //Добавляем в стейт новый объект
       }
     } catch {
       alert("Failed to add the manuscript to Selected");
     }
   };
 
-  const onAddToFavourities = (addedFavouriteManuscript) => {
+  const onAddToFavourities = async (addedFavouriteManuscript) => {
     try {
-      if (
-        props.favouriteManuscripts.find(
-          (obj) => Number(obj.id) === Number(addedFavouriteManuscript.id)
-        )
-      ) {
+      const findFavouriteManuscript = props.favouriteManuscripts.find(
+        (favouriteItem) => favouriteItem.myId === addedFavouriteManuscript.myId
+      );
+      if (findFavouriteManuscript) {
         axios.delete(
-          `https://63500d14df22c2af7b61c10a.mockapi.io/favourities/${addedFavouriteManuscript.id}`
+          `http://localhost:3001/favourities/${findFavouriteManuscript.id}`
         );
       } else {
-        axios.post(
-          "https://63500d14df22c2af7b61c10a.mockapi.io/favourities",
+        const { data } = await axios.post(
+          "http://localhost:3001/favourities",
           addedFavouriteManuscript
         );
-        props.setFavouriteManuscripts([...props.favouriteManuscripts, addedFavouriteManuscript]);
+        props.setFavouriteManuscripts([...props.favouriteManuscripts, data]);
       }
     } catch {
       alert("Failed to add the manuscript to your favourites list");
@@ -58,6 +57,31 @@ const Manuscripts = (props) => {
 
   const onSearchInput = (inputValue) => {
     props.setSearch(inputValue.target.value);
+  };
+
+  const renderManuscript = () => {
+    const filterManuscripts = props.manuscripts.filter((manuscript) =>
+      manuscript.title.toLowerCase().includes(props.search.toLowerCase())
+    );
+
+    return (props.loading ? [...Array(6)] : filterManuscripts).map(
+      (manuscripts, index) => {
+        return (
+          <Card
+            key={index}
+            {...manuscripts}
+            isLoading={props.loading}
+            
+            onFavourite={(favouriteManuscript) => {
+              onAddToFavourities(favouriteManuscript);
+            }}
+            onPlus={(selectedManuscript) => {
+              onAddToSelected(selectedManuscript);
+            }}
+          />
+        );
+      }
+    );
   };
 
   return (
@@ -75,32 +99,8 @@ const Manuscripts = (props) => {
         </div>
       </div>
 
-      <div className={style.manuscripts}>
-        {props.manuscripts
-          .filter((manuscript) =>
-            manuscript.title.toLowerCase().includes(props.search.toLowerCase())
-          )
-          .map((manuscript) => {
-            return (
-              <Card
-                key={manuscript.id}
-                id={manuscript.id}
-                title={manuscript.title}
-                description={manuscript.description}
-                shelfNumber={manuscript.shelfNumber}
-                img={manuscript.img}
-                onFavourite={(favouriteManuscript) => {
-                  onAddToFavourities(favouriteManuscript);
-                }}
-                onPlus={(selectedManuscript) => {
-                  onAddToSelected(selectedManuscript);
-                }}
-              />
-            );
-          })}
-      </div>
+      <div className={style.manuscripts}>{renderManuscript()}</div>
     </div>
   );
 };
-
 export default Manuscripts;

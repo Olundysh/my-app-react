@@ -9,43 +9,75 @@ import Overlay from "./components/overlay/Overlay";
 import Favourites from "./components/favourities/favourities";
 import Home from "./Home";
 
+export const AppContext = React.createContext({})
+
 function App() {
-  const [overlayOpened, setOverlayOpened] = React.useState(false); //Устанавливаем состояние "overlayOpened" для открытия боковой панели - оно boolean, т.е. либо открыта, либо закрыта; по умолчанию панель закрыта; функция-property "openOverlay" будет прописана на этой же странице, в <Header/>, чтобы передать-прокинуть ее ниже - непосредственно в сам jsx-элемент Header.
 
-  const [manuscripts, setManuscripts] = React.useState([]); //Этот массив - состояние для хранения данных карточек-рукописей - сюда приходят данные из mocapi, мы получаем оттуда массив.
+  
 
-  const [overlayManuscripts, setOverlayManuscripts] = React.useState([]); //Этот массив - состояние для хранения данных из избранного Selected - сюда через сложный путь приходят данные из Card, который получает их из Manuscripts, который получает их из App, куда они приходят из mocapi.
+  
 
+  //Этот массив - состояние для хранения данных карточек-рукописей - сюда приходят данные из mocapi, мы получаем оттуда массив.
+  const [manuscripts, setManuscripts] = React.useState([]);
+
+  //Устанавливаем состояние "overlayOpened" для открытия боковой панели - оно boolean, т.е. либо открыта, либо закрыта; по умолчанию панель закрыта; функция-property "openOverlay" будет прописана на этой же странице, в <Header/>, чтобы передать-прокинуть ее ниже - непосредственно в сам jsx-элемент Header.
+  const [overlayOpened, setOverlayOpened] = React.useState(false);
+
+  //Этот массив - состояние для хранения данных из избранного Selected - сюда через сложный путь приходят данные из Card, который получает их из Manuscripts, который получает их из App, куда они приходят из mocapi.
+  const [overlayManuscripts, setOverlayManuscripts] = React.useState([]);
+
+  //Этот массив - состояние для хранения данных из Favourites
   const [favouriteManuscripts, setFavouriteManuscripts] = React.useState([]);
 
-  const [search, setSearch] = React.useState(""); // Эта "Строка" - состояние для поиска, который мы будем проводить в элементе <Manuscripts>.
+  // Эта "Строка" - состояние для поиска, который мы будем проводить в элементе <Manuscripts>.
+  const [search, setSearch] = React.useState("");
 
+  // state для хранения состояния загрузки
+  const [loading, setLoading] = React.useState(true);
+
+  
   React.useEffect(() => {
-    axios // Получаем массив с данными из бэкенда через mocapi/axios:
-      .get("https://63500d14df22c2af7b61c10a.mockapi.io/products")
-      .then((res) => {
-        setManuscripts(res.data);
-      });
-    axios // Передаем массив с данными с фронтэнда черAез mocapi/axios в бэкэнд:
-      .get("https://63500d14df22c2af7b61c10a.mockapi.io/cart")
-      .then((res) => {
-        setOverlayManuscripts(res.data);
-      });
+    async function axiosData() {
+      const overlayData = await axios.get(
+        "http://localhost:3001/cart"
+      );
+      const favouritiesData = await axios.get(
+        "http://localhost:3001/favourities"
+      );
+      const manuscriptsData = await axios.get(
+        "http://localhost:3001/products"
+      );
+
+      setLoading(false)
+
+      setOverlayManuscripts(overlayData.data);
+      setFavouriteManuscripts(favouritiesData.data);
+      setManuscripts(manuscriptsData.data);
+    }
+
+    axiosData();
   }, []);
 
   //Удаление из Selected:
-  const onRemoveCartItem = (id) => {
-    axios.delete(`https://63500d14df22c2af7b61c10a.mockapi.io/cart/${id}`);
+  const onRemoveOverlayItem = (id) => {
+    axios.delete(`http://localhost:3001/cart/${id}`);
     setOverlayManuscripts((prev) =>
       prev.filter((item) => Number(item.id) !== Number(id))
     );
   };
 
+
+const itemAdded = (id) => {return overlayManuscripts.some((objOverlay) => objOverlay.id === id)}
+const itemFavourite = (id) => {
+  return overlayManuscripts.some(objFavourite => objFavourite.id === id)
+}
+
   return (
+<AppContext.Provider value={{manuscripts, overlayManuscripts, favouriteManuscripts, overlayOpened, setOverlayOpened, setManuscripts, setFavouriteManuscripts, setOverlayManuscripts, itemAdded, itemFavourite}}>
     <div className="app">
       {overlayOpened ? (
         <Overlay
-          onRemoveCartItem={onRemoveCartItem}
+          onRemoveOverlayItem={onRemoveOverlayItem}
           overlayManuscripts={overlayManuscripts}
           closeOverlay={() => setOverlayOpened(false)}
         />
@@ -55,16 +87,11 @@ function App() {
       {/* Внутри jsx-элемента <Overlay/> прописываем массив-property "overlaytItems": Из каких объектов он состоит, мы можем узнать только если спустимся ниже по элементам. После этого идем в элемент Overlay, где укажем - в каком моменте этот массив-property будет использоваться, и из каких элементов он будет состоять. */}
 
       <Header openOverlay={() => setOverlayOpened(true)} />
-      <div>
         <Routes>
           <Route
             path="/favourities"
             element={
               <Favourites
-                favouriteManuscripts={favouriteManuscripts}
-                setFavouriteManuscripts={setFavouriteManuscripts}
-                overlayManuscripts={overlayManuscripts}
-                setOverlayManuscripts={setOverlayManuscripts}
               />
             }
           />
@@ -75,18 +102,20 @@ function App() {
               <Home
                 manuscripts={manuscripts}
                 overlayManuscripts={overlayManuscripts}
+                setOverlayManuscripts={setOverlayManuscripts}
                 favouriteManuscripts={favouriteManuscripts}
                 setFavouriteManuscripts={setFavouriteManuscripts}
-                setOverlayManuscripts={setOverlayManuscripts}
-                setSearch={setSearch}
                 search={search}
+                setSearch={setSearch}
+                loading={loading}
+            
               />
             }
           />
         </Routes>
-      </div>
       <Footer />
     </div>
+    </AppContext.Provider>
   );
 }
 

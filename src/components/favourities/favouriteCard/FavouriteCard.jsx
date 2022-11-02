@@ -1,9 +1,12 @@
 import style from "./favouriteCard.module.css";
 import React from "react";
+import { AppContext } from "../../../App";
 
 const FavouriteCard = (props) => {
-  const [added, setAdded] = React.useState(false);
-  const [favourite, setFavourite] = React.useState(true);
+  const context = React.useContext(AppContext);
+
+  const [added, setAdded] = React.useState(context.itemAdded);
+  // const [favourite, setFavourite] = React.useState(context.itemFavourite);
 
   const onClickPlus = () => {
     let id = props.id;

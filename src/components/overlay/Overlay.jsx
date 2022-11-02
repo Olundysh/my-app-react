@@ -25,11 +25,12 @@ const Overlay = (props) => {
                 return (
                   <Selected
                     key={obj.id}
+                    myId={obj.myId}
                     id={obj.id}
                     title={obj.title}
                     shelfNumber={obj.shelfNumber}
                     img={obj.img}
-                    onRemoveCartItem={props.onRemoveCartItem}
+                    onRemoveOverlayItem={props.onRemoveOverlayItem}
                   />
                 );
               })}

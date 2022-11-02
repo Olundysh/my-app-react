@@ -2,20 +2,25 @@ import React from "react";
 import style from "./favourities.module.css";
 import axios from "axios";
 import FavouriteCard from "./favouriteCard/FavouriteCard";
+import { AppContext } from "../../App";
 
-const Favourites = (props) => {
+const Favourites = () => {
+  const context = React.useContext(AppContext);
+
   const onAddToSelected = (addedManuscript) => {
     // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
-    axios.post(
-      "https://63500d14df22c2af7b61c10a.mockapi.io/cart",
-      addedManuscript
-    );
-    props.setOverlayManuscripts([...props.overlayManuscripts, addedManuscript]); //Добавляем в стейт новый объект
+    axios.post("http://localhost:3001/cart", addedManuscript);
+    context.setOverlayManuscripts([
+      ...context.overlayManuscripts,
+      addedManuscript,
+    ]); //Добавляем в стейт новый объект
   };
 
   const onRemoveFromFavourities = (id) => {
-    axios.delete(`https://63500d14df22c2af7b61c10a.mockapi.io/favourities/${id}`);
-    props.setFavouriteManuscripts((prev) => prev.filter((item) => Number(item.id) !== Number(id)));
+    axios.delete(`http://localhost:3001/favourities/${id}`);
+    context.setFavouriteManuscripts((prev) =>
+      prev.filter((item) => Number(item.id) !== Number(id))
+    );
   };
 
   return (
@@ -25,7 +30,7 @@ const Favourites = (props) => {
       </div>
 
       <div className={style.manuscripts}>
-        {props.favouriteManuscripts.map((manuscript) => {
+        {context.favouriteManuscripts.map((manuscript) => {
           return (
             <FavouriteCard
               key={manuscript.id}

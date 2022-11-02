@@ -1,10 +1,25 @@
 .text_section {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 30px auto;
 }
 
-.text_section h2 {
+.h2_slider {
   font-size: 30px;
   text-align: center;
+  color: rgb(13, 41, 13);
 }
+
+.slider{
+  background: linear-gradient(rgb(213, 241, 213), rgb(178, 211, 178));
+  color: rgb(44, 41, 41);
+  font-size: 16px;
+  line-height: 30px;
+  margin: 10px;
+  padding: 2%;
+  position: relative;;
+  text-align: center;
+  border-radius: 30px;
+  box-shadow: 1px 2px 5px 0px rgb(39, 38, 38);
+}
+
 

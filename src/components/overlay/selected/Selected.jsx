@@ -12,7 +12,7 @@ const Selected = (props) => {
             {props.shelfNumber} T III.
           </span>
         </h3>
-        <button  onClick={()=> props.onRemoveCartItem(props.id)} className={style.close_btn}>X</button>
+        <button  onClick={()=> props.onRemoveOverlayItem(props.id)} className={style.close_btn}>X</button>
       </div>
     </div>
   )
