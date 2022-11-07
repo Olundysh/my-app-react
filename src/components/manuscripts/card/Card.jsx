@@ -1,6 +1,5 @@
 import style from "./card.module.css";
 import React from "react";
-import axios from "axios";
 import ContentLoader from "react-content-loader";
 import { AppContext } from "../../../App";
 
