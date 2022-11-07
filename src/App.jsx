@@ -39,13 +39,13 @@ function App() {
   React.useEffect(() => {
     async function axiosData() {
       const overlayData = await axios.get(
-        `${process.env.API_URL}/cart`
+        `${process.env.REACT_APP_API_URL}/cart`
       );
       const favouritiesData = await axios.get(
-        `${process.env.API_URL}/favourities`
+        `${process.env.REACT_APP_API_URL}/favourities`
       );
       const manuscriptsData = await axios.get(
-        `${process.env.API_URL}/products`
+        `${process.env.REACT_APP_API_URL}/products`
       );
 
       setLoading(false)
@@ -60,7 +60,7 @@ function App() {
 
   //Удаление из Selected:
   const onRemoveOverlayItem = (id) => {
-    axios.delete(`${process.env.API_URL}/cart/${id}`);
+    axios.delete(`${process.env.REACT_APP_API_URL}/cart/${id}`);
     setOverlayManuscripts((prev) =>
       prev.filter((item) => Number(item.id) !== Number(id))
     );

@@ -9,7 +9,7 @@ const Favourites = () => {
 
   const onAddToSelected = (addedManuscript) => {
     // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
-    axios.post(`${process.env.API_URL}/cart`, addedManuscript);
+    axios.post(`${process.env.REACT_APP_API_URL}/cart`, addedManuscript);
     context.setOverlayManuscripts([
       ...context.overlayManuscripts,
       addedManuscript,
@@ -17,7 +17,7 @@ const Favourites = () => {
   };
 
   const onRemoveFromFavourities = (id) => {
-    axios.delete(`${process.env.API_URL}/favourities/${id}`);
+    axios.delete(`${process.env.REACT_APP_API_URL}/favourities/${id}`);
     context.setFavouriteManuscripts((prev) =>
       prev.filter((item) => Number(item.id) !== Number(id))
     );

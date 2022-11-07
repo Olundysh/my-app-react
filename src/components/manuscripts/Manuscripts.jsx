@@ -14,7 +14,7 @@ const Manuscripts = (props) => {
       );
       if (findOverlayManuscripts) {
         axios.delete(
-          `${process.env.API_URL}/cart/${findOverlayManuscripts.id}`
+          `${process.env.REACT_APP_API_URL}/cart/${findOverlayManuscripts.id}`
         );
         props.setOverlayManuscripts((prev) =>
           prev.filter(
@@ -24,7 +24,7 @@ const Manuscripts = (props) => {
       } else {
         // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
         const { data } = await axios.post(
-          `${process.env.API_URL}/cart`,
+          `${process.env.REACT_APP_API_URL}/cart`,
           addedManuscript
         );
         props.setOverlayManuscripts([...props.overlayManuscripts, data]); //Добавляем в стейт новый объект
@@ -41,11 +41,11 @@ const Manuscripts = (props) => {
       );
       if (findFavouriteManuscript) {
         axios.delete(
-          `${process.env.API_URL}/favourities/${findFavouriteManuscript.id}`
+          `${process.env.REACT_APP_API_URL}/favourities/${findFavouriteManuscript.id}`
         );
       } else {
         const { data } = await axios.post(
-          `${process.env.API_URL}/favourities`,
+          `${process.env.REACT_APP_API_URL}/favourities`,
           addedFavouriteManuscript
         );
         props.setFavouriteManuscripts([...props.favouriteManuscripts, data]);
