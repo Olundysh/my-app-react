@@ -1,10 +1,13 @@
 import style from "./card.module.css";
 import React from "react";
+import axios from "axios";
 import ContentLoader from "react-content-loader";
 import { AppContext } from "../../../App";
 
 const Card = (props) => {
 const context = React.useContext(AppContext);
+
+
 
   // const [added, setAdded] = React.useState(props.isAdded);
   // const [favourite, setFavourite] = React.useState(props.isFavourite);
@@ -58,7 +61,7 @@ const context = React.useContext(AppContext);
         </ContentLoader>
       ) : (
         <>
-          {context.itemFavourite === true ? (
+          {context.itemFavourite (props.id) ? (
             <button
               className={style.favourite_btn_added}
               onClick={onClickFavouritePlus}

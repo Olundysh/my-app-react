@@ -69,7 +69,7 @@ function App() {
 
 const itemAdded = (id) => {return overlayManuscripts.some((objOverlay) => objOverlay.id === id)}
 const itemFavourite = (id) => {
-  return overlayManuscripts.some(objFavourite => objFavourite.id === id)
+  return favouriteManuscripts.some(objFavourite => objFavourite.id === id)
 }
 
   return (
@@ -97,7 +97,7 @@ const itemFavourite = (id) => {
           />
 
           <Route
-            path="/"
+            path="/myapp"
             element={
               <Home
                 manuscripts={manuscripts}

@@ -55,6 +55,8 @@ const Manuscripts = (props) => {
     }
   };
 
+ 
+
   const onSearchInput = (inputValue) => {
     props.setSearch(inputValue.target.value);
   };
