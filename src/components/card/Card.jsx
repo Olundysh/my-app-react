@@ -1,9 +1,9 @@
 import style from "./card.module.css";
 import { useState, useContext } from "react";
 import ContentLoader from "react-content-loader";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../App";
 
-const Card = ({ manuscript, isLoading }) => {
+const Card = ({ manuscript, isLoading, onFavourite }) => {
   const context = useContext(AppContext);
 
   const [isPlusBusy, setIsPlusBusy] = useState(false);
@@ -17,18 +17,9 @@ const Card = ({ manuscript, isLoading }) => {
 
  
 
-  // const onClickFavouritePlus = () => {
-  //   let id = props.id;
-  //   let myId = props.myId;
-  //   let title = props.title;
-  //   let description = props.description;
-  //   let shelfNumber = props.shelfNumber;
-  //   let img = props.img;
-
-  //   props.onFavourite({ id, myId, title, description, shelfNumber, img });
-
-  //   // setFavourite(!favourite);
-  // };
+  const onClickFavouritePlus = () => {
+    onFavourite(manuscript);
+  };
 
   return (
     <div className={style.manuscript_item}>
@@ -53,14 +44,14 @@ const Card = ({ manuscript, isLoading }) => {
           {context.itemFavourite(manuscript.id) ? (
             <button
               className={style.favourite_btn_added}
-              // onClick={onClickFavouritePlus}
+              onClick={onClickFavouritePlus}
             >
               Remove from Favourities
             </button>
           ) : (
             <button
               className={style.favourite_btn}
-              // onClick={onClickFavouritePlus}
+              onClick={onClickFavouritePlus}
             >
               Add to Favourities
             </button>

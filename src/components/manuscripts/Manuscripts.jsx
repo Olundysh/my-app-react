@@ -1,5 +1,5 @@
 import axios from "axios";
-import Card from "./card/Card";
+import Card from "../card/Card";
 import style from "./manuscripts.module.css";
 import React from "react";
 

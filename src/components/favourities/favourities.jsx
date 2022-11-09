@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./favourities.module.css";
 import axios from "axios";
-import FavouriteCard from "./favouriteCard/FavouriteCard";
+import Card from "../card/Card";
 import { AppContext } from "../../App";
 
 const Favourites = () => {
@@ -32,18 +32,11 @@ const Favourites = () => {
       <div className={style.manuscripts}>
         {context.favouriteManuscripts.map((manuscript) => {
           return (
-            <FavouriteCard
+            <Card
               key={manuscript.id}
-              id={manuscript.id}
-              title={manuscript.title}
-              description={manuscript.description}
-              shelfNumber={manuscript.shelfNumber}
-              img={manuscript.img}
-              onRemoveFromFavourities={(id) => {
-                onRemoveFromFavourities(id);
-              }}
-              onPlus={(selectedManuscript) => {
-                onAddToSelected(selectedManuscript);
+              manuscript={manuscript}
+              onFavourite={(manuscript) => {
+                onRemoveFromFavourities(manuscript.id);
               }}
             />
           );
