@@ -1,48 +1,38 @@
 import style from "./card.module.css";
-import React from "react";
+import { useState, useContext } from "react";
 import ContentLoader from "react-content-loader";
 import { AppContext } from "../../../App";
 
-const Card = (props) => {
-const context = React.useContext(AppContext);
+const Card = ({ manuscript, isLoading }) => {
+  const context = useContext(AppContext);
 
+  const [isPlusBusy, setIsPlusBusy] = useState(false);
+  const isAddedToOverlay = context.isItemAdded(manuscript?.id);
 
-
-  // const [added, setAdded] = React.useState(props.isAdded);
-  // const [favourite, setFavourite] = React.useState(props.isFavourite);
-
-  // const [added, setAdded] = React.useState(false);
-  // const [favourite, setFavourite] = React.useState(false);
-
-  const onClickPlus = () => {
-    let id = props.id;
-    let myId = props.myId;
-    let title = props.title;
-    let description = props.description;
-    let shelfNumber = props.shelfNumber;
-    let img = props.img;
-
-    props.onPlus({ id, myId, title, description, shelfNumber, img });
-
-    // setAdded(!added);
+  const onPlusClick = async () => {
+    setIsPlusBusy(true);
+    await (isAddedToOverlay ? context.removeManuscriptFromOverlay(manuscript.id) :  context.addManuscriptToOverlay(manuscript.id));
+    setIsPlusBusy(false);
   };
 
-  const onClickFavouritePlus = () => {
-    let id = props.id;
-    let myId = props.myId;
-    let title = props.title;
-    let description = props.description;
-    let shelfNumber = props.shelfNumber;
-    let img = props.img;
+ 
 
-    props.onFavourite({ id, myId, title, description, shelfNumber, img });
+  // const onClickFavouritePlus = () => {
+  //   let id = props.id;
+  //   let myId = props.myId;
+  //   let title = props.title;
+  //   let description = props.description;
+  //   let shelfNumber = props.shelfNumber;
+  //   let img = props.img;
 
-    // setFavourite(!favourite);
-  };
+  //   props.onFavourite({ id, myId, title, description, shelfNumber, img });
+
+  //   // setFavourite(!favourite);
+  // };
 
   return (
     <div className={style.manuscript_item}>
-      {props.isLoading ? (
+      {isLoading ? (
         <ContentLoader
           speed={2}
           width={290}
@@ -60,17 +50,17 @@ const context = React.useContext(AppContext);
         </ContentLoader>
       ) : (
         <>
-          {context.itemFavourite (props.id) ? (
+          {context.itemFavourite(manuscript.id) ? (
             <button
               className={style.favourite_btn_added}
-              onClick={onClickFavouritePlus}
+              // onClick={onClickFavouritePlus}
             >
               Remove from Favourities
             </button>
           ) : (
             <button
               className={style.favourite_btn}
-              onClick={onClickFavouritePlus}
+              // onClick={onClickFavouritePlus}
             >
               Add to Favourities
             </button>
@@ -78,21 +68,31 @@ const context = React.useContext(AppContext);
 
           <img
             className={style.manuscript_img}
-            src={props.img}
+            src={manuscript.img}
             alt="Tocharian mss"
           />
-          <p className={style.manuscript_title}>{props.title}</p>
-          <p className={style.manuscript_description}>{props.description}</p>
+          <p className={style.manuscript_title}>{manuscript.title}</p>
+          <p className={style.manuscript_description}>
+            {manuscript.description}
+          </p>
           <p className={style.shelfNumber}>Shelf number</p>
 
           <p className={style.manuscript_shelfNumber}>
-            <span>{props.shelfNumber} T III</span>
-            <button
-              className={context.itemAdded(props.id) ? style.add_mss : style.add_mss1}
-              onClick={onClickPlus}
+            <span>{manuscript.shelfNumber} T III</span>
+            <button disabled={isPlusBusy}
+              className={
+               isAddedToOverlay
+                  ? style.add_mss
+                  : style.add_mss1
+              }
+              onClick={onPlusClick}
             >
               <img
-                src={context.itemAdded(props.id) ? "./img/check.png" : "./img/icons8-plus-24.png"}
+                src={
+                  isAddedToOverlay
+                    ? "./img/check.png"
+                    : "./img/icons8-plus-24.png"
+                }
                 alt="add"
               ></img>
             </button>

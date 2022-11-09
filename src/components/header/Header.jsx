@@ -8,7 +8,7 @@ import style from "./header.module.css"
 const Header = (props) => {
   return (
     <header>
-       <Link to="/myapp">
+       <Link to="/">
       <h1 className={style.logo}>TOCHMAC</h1>
       </Link>
       <nav>

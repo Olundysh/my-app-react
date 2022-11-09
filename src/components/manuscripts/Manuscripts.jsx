@@ -3,36 +3,8 @@ import Card from "./card/Card";
 import style from "./manuscripts.module.css";
 import React from "react";
 
-// "Элемент Manuscripts принимает праметры-пропсы с более высокого элемента - App. ";
-// Тэгам мы придаем имена вот таким образом - className={style.manuscripts_section} - потому что импортируем их из отдельного css-файла (см. в верху страницы)
-
 const Manuscripts = (props) => {
-  const onAddToSelected = async (addedManuscript) => {
-    try {
-      const findOverlayManuscripts = props.overlayManuscripts.find(
-        (overLayItem) => overLayItem.myId === addedManuscript.myId
-      );
-      if (findOverlayManuscripts) {
-        axios.delete(
-          `${process.env.REACT_APP_API_URL}/cart/${findOverlayManuscripts.id}`
-        );
-        props.setOverlayManuscripts((prev) =>
-          prev.filter(
-            (overLayItem) => overLayItem.myId !== addedManuscript.myId
-          )
-        );
-      } else {
-        // Отправляем в серверную часть карточки, которые кнопкой выбрали в Selected:
-        const { data } = await axios.post(
-          `${process.env.REACT_APP_API_URL}/cart`,
-          addedManuscript
-        );
-        props.setOverlayManuscripts([...props.overlayManuscripts, data]); //Добавляем в стейт новый объект
-      }
-    } catch {
-      alert("Failed to add the manuscript to Selected");
-    }
-  };
+  
 
   const onAddToFavourities = async (addedFavouriteManuscript) => {
     try {
@@ -40,9 +12,11 @@ const Manuscripts = (props) => {
         (favouriteItem) => favouriteItem.myId === addedFavouriteManuscript.myId
       );
       if (findFavouriteManuscript) {
-        axios.delete(
+        await axios.delete(
           `${process.env.REACT_APP_API_URL}/favourities/${findFavouriteManuscript.id}`
         );
+        props.setFavouriteManuscripts(props.favouriteManuscripts.filter((item) => Number(item.id) !== findFavouriteManuscript.id));
+  
       } else {
         const { data } = await axios.post(
           `${process.env.REACT_APP_API_URL}/favourities`,
@@ -67,19 +41,19 @@ const Manuscripts = (props) => {
     );
 
     return (props.loading ? [...Array(6)] : filterManuscripts).map(
-      (manuscripts, index) => {
+      (manuscript) => {
         return (
           <Card
-            key={index}
-            {...manuscripts}
+            key={manuscript?.id}
+            manuscript={manuscript}
             isLoading={props.loading}
             
             onFavourite={(favouriteManuscript) => {
               onAddToFavourities(favouriteManuscript);
             }}
-            onPlus={(selectedManuscript) => {
-              onAddToSelected(selectedManuscript);
-            }}
+            // onPlus={(selectedManuscript) => {
+            //   onAddToSelected(selectedManuscript);
+            // }}
           />
         );
       }
