@@ -1,3 +1,5 @@
+Frontend Project for the final certification for the course "Fullstack - Java developer"  in REU (Plekhanov Russian University of Economics).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
